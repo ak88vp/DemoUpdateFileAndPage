@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
+    <style>
+        table {
+            border: 1px solid #d21d1d;
+        }
+
+        th {
+            border: 1px solid #d21d1d;
+        }
+
+        td {
+            border: 1px solid #d21d1d;
+        }
+
+        body {
+            background: url("/img/background.jpg");
+            background-size: cover;
+        }
+        .chu{
+            color: #55066e;
+            size: 3px;
+        }
+
+    </style>
+</head>
+
+
+<body class="br">
+<center>
+    <form action="/products/save" method="POST"  enctype="multipart/form-data">
+        <input type="file" name="multipartFile"/>
+        <button> Update</button>
+    </form>
+    <h1>List product</h1>
+    <br>
+    <br>
+    <br>
+    <div class="center-pill">
+        <div class="row">
+            <div class="offset-1"></div>
+            <div class="col-2">
+                <a class="btn btn-primary" href="/products/create" role="button"> + Add New Product</a>
+            </div>
+            <div class="offset-5"></div>
+            <div class="col-4" style="background-color : transparent">
+                <nav class="navbar navbar-light " style="background-color : transparent !important;">
+                    <form class="form-inline" action="/products" method="get">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                               name="key">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" th:href="@{/products/sort/1}" role="button"> Sort desc</a>
+    <a class="btn btn-primary" th:href="@{/products/sort/}" role="button"> Sort asc</a>
+
+    <div class="center-pill">
+        <div class="row">
+            <div class="offset-1"></div>
+            <div class="col-10">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="product,index : ${products}">
+                        <tr>
+                            <td class="chu" th:text="${index.count}"></td>
+                            <td class="chu" th:text="${product.getName()}"></td>
+                            <td class="chu" th:text="${product.getPrice()}"></td>
+                            <td class="chu" th:text="${product.getCategory().getName()}"></td>
+
+                            <td><a class="aa" th:href="@{/products/edit/__${product.getId()}__ }">Edit</a></td>
+                            <td><a class="aa" th:href="@{/products/delete/__${product.id}__ }"
+                                   onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation();
+                                           event.preventDefault();};"
+                                   title="Link Title"
+                            >Delete</a></td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+
+                    <a th:if="${products.hasPrevious()}" th:href="@{'/products'(page=${products.number}-1,key=${key})}"> back</a>
+                    <span th:text="${products.number+1}"></span>/<span th:text="${products.totalPages}"></span>
+                    <a th:if="${products.hasNext()}" th:href="@{'/products'(page=${products.number}+1,key=${key})}"> Next</a>
+                </div>
+            </div>
+            <div class="offset-1"></div>
+        </div>
+    </div>
+</center>
+</body>
+</html>

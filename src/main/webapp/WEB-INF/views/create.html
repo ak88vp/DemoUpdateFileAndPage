@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .create{
+            background: aqua;
+            height: 25px;
+            width: 100px;
+        }
+        body {
+            background: url("/img/background.jpg");
+            background-size: cover;
+        }
+        p{
+            color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+<center >
+    <div >
+        <h1> New Product</h1>
+        <a href="/products/"> Back home</a>
+        <form method="post">
+            <p>Name  : <input type="text" name="name" placeholder="Enter name"  ></p>
+            <p>Price   : <input type="text" name="price"  placeholder="Enter price"></p>
+            <select name="idCategory" style="background: pink">
+                <option th:each="category :${categorys}" th:value="${category.getId()}" th:text="${category.getName()}" ></option>
+            </select>
+            <button class="create"> create</button>
+        </form>
+    </div>
+</center>
+</body>
+</html>

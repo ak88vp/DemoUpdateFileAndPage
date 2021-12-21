@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .edit {
+        background: aqua;
+        height: 25px;
+        width: 100px;
+    }
+
+    .br {
+        background: url("/img/background.jpg");
+        background-size: cover;
+    }
+
+    p {
+        color: greenyellow;
+    }
+</style>
+<body class="br">
+<center>
+    <div>
+
+
+        <H1>Edit Student</H1>
+        <a href="/students/"> Back home</a>
+        <form method="post">
+            <input type="hidden" name="id" th:value="${product.get().getId()}">
+            <p>Name :<input type="text" name="name" th:value="${product.get().getName()}"></p>
+            <p>Price :<input type="text" name="price" th:value="${product.get().getPrice()}"></p>
+
+            <select name="idCategory" style="background: pink">
+
+                <option th:text="${product.get().getCategory().getName()}" th:value="${product.get().getCategory().getId()}"></option>
+                <th:block th:each="category,index : ${categorys}">
+                    <th:block th:if="${product.get().getCategory().getId()}!=${category.getId()}">
+                        <option  th:value="${category.getId()}"
+                                 th:text="${category.getName()}">
+                        </option>
+                    </th:block>
+
+                </th:block>
+            </select>
+            <button class="edit"> Edit</button>
+        </form>
+    </div>
+</center>
+</body>
+</html>
