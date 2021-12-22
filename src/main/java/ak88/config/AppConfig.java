@@ -135,7 +135,8 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**").addResourceLocations("/img/");
+        registry.addResourceHandler("/ak88/**")
+                .addResourceLocations("file:" + "D:\\ak\\");
     }
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver getResolver() throws IOException {

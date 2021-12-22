@@ -3,7 +3,6 @@ package ak88.model;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Entity
@@ -16,6 +15,22 @@ public class Product {
     private String name;
     @Max(10000)
     private int price;
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Product(String name, int price, String img, Category category) {
+        this.name = name;
+        this.price = price;
+        this.img = img;
+        this.category = category;
+    }
 
     @ManyToOne
     private Category category;

@@ -12,10 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -70,10 +73,18 @@ public class ProductController {
         return "/create";
     }
     @PostMapping("create")
-    public String createProduct(@Valid Product product, BindingResult bindingResult) {
+    public String createProduct(@Valid Product product, BindingResult bindingResult, @RequestParam MultipartFile image) {
         if(bindingResult.hasErrors()){
             return "/create";
         }
+        String fileName = image.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(image.getBytes(),
+                    new File("D:\\ak\\" + fileName));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        product.setImg(fileName);
         productService.save(product);
         return "redirect:/products";
     }

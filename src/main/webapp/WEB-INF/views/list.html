@@ -26,12 +26,16 @@
         }
 
         body {
-            background: url("/img/background.jpg");
+            background: url("https://i.vietgiaitri.com/2017/10/4/bo-anh-nen-desktop-girl-xinh-chon-loc-e90882.jpg");
             background-size: cover;
         }
         .chu{
             color: #55066e;
             size: 3px;
+        }
+        .imgProduct{
+            height: 60px;
+            width: 60px;
         }
 
     </style>
@@ -40,10 +44,7 @@
 
 <body class="br">
 <center>
-    <form action="/products/save" method="POST"  enctype="multipart/form-data">
-        <input type="file" name="multipartFile"/>
-        <button> Update</button>
-    </form>
+
     <h1>List product</h1>
     <br>
     <br>
@@ -83,6 +84,7 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">img</th>
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Category</th>
@@ -93,6 +95,7 @@
                     <tbody>
                     <th:block th:each="product,index : ${products}">
                         <tr>
+                            <td><img th:src="@{'/ak88/'+${product.getImg()}}" alt="" class="imgProduct"></td>
                             <td class="chu" th:text="${index.count}"></td>
                             <td class="chu" th:text="${product.getName()}"></td>
                             <td class="chu" th:text="${product.getPrice()}"></td>
