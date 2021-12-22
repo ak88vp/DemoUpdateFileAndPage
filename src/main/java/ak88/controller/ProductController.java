@@ -12,11 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -48,6 +48,15 @@ public class ProductController {
         }
         return "/list";
     }
+    @GetMapping("sort")
+    public String sortDesc(Model model, @PageableDefault(value = 4) Pageable pageable,String key){
+
+        Page<Product> products=productService.findAllByOrderByPriceDesc(pageable);
+        model.addAttribute("products", products);
+        model.addAttribute("key",key);
+        model.addAttribute("pageable",pageable);
+        return "/sort";
+    }
     @PostMapping("save")
     public String updateFile(Update update) throws IOException {
         UpdateFileService updateFileService=new UpdateFileService();
@@ -56,14 +65,15 @@ public class ProductController {
     }
 
     @GetMapping("create")
-    public String showCreate() {
+    public String showCreate(Model model) {
+        model.addAttribute("product",new Product());
         return "/create";
     }
-
     @PostMapping("create")
-    public String createProduct(Product product, Long idCategory) {
-        Optional<Category> category = categoryService.findById(idCategory);
-        product.setCategory(category.get());
+    public String createProduct(@Valid Product product, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "/create";
+        }
         productService.save(product);
         return "redirect:/products";
     }
@@ -72,6 +82,14 @@ public class ProductController {
     public String deleteProduct(@PathVariable Long id) {
         productService.remove(id);
         return "redirect:/products";
+    }
+    @GetMapping("findCategory")
+    public String findCategory(Long idCategory,Pageable pageable,Model model){
+        Optional<Category> category=categoryService.findById(idCategory);
+        Category category1=category.get();
+       Page<Product> products=productService.findAllByCategory(category1,pageable);
+        model.addAttribute("products",products);
+        return "/findCategory";
     }
 
     @GetMapping("edit/{id}")

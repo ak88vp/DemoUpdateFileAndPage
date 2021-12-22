@@ -1,13 +1,20 @@
 package ak88.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "khong dc")
+    @Pattern(regexp = "^[a-zA-Z]*", message = "Nhap a-z")
     private String name;
+    @Max(10000)
     private int price;
 
     @ManyToOne

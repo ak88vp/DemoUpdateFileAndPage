@@ -66,8 +66,14 @@
             </div>
         </div>
     </div>
-    <a class="btn btn-primary" th:href="@{/products/sort/1}" role="button"> Sort desc</a>
-    <a class="btn btn-primary" th:href="@{/products/sort/}" role="button"> Sort asc</a>
+    <a class="btn btn-primary" th:href="@{/products/sort}" role="button"> Sort desc</a>
+    <form action="/products/findCategory">
+        <select name="idCategory">
+            <option th:each="category :${categorys}" th:value="${category.getId()}" th:text="${category.getName()}" ></option>
+        </select>
+    <button> tìm kiếm</button>
+    </form>
+
 
     <div class="center-pill">
         <div class="row">

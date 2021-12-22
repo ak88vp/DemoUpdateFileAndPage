@@ -1,5 +1,6 @@
 package ak88.service;
 
+import ak88.model.Category;
 import ak88.model.Product;
 import ak88.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findAll(Pageable pageable) {
         return iProductRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByOrderByPriceDesc(Pageable pageable) {
+        return iProductRepository.findAllByOrderByPriceDesc(pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByCategory(Category category, Pageable pageable) {
+        return iProductRepository.findAllByCategory(category,pageable);
     }
 
     @Override
