@@ -15,6 +15,7 @@ public class Product {
     private String name;
     @Max(10000)
     private int price;
+
     private String img;
 
     public String getImg() {

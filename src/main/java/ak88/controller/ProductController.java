@@ -39,7 +39,7 @@ public class ProductController {
 
 
     @GetMapping("")
-    public String showList(Model model, @PageableDefault(value = 5) Pageable pageable, String key) {
+    public String showList(Model model, @PageableDefault(value = 5,sort = "price") Pageable pageable, String key) {
         Page<Product> products;
         if (key != null) {
             model.addAttribute("products", productService.findByNameContaining(key, pageable));
@@ -106,6 +106,10 @@ public class ProductController {
     @GetMapping("edit/{id}")
     public String showEdit(Model model, @PathVariable Long id) {
         model.addAttribute("product", productService.findById(id));
+
+
+
+
         return "/edit";
     }
 
